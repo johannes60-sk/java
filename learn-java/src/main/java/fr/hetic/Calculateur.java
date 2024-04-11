@@ -1,18 +1,29 @@
 package fr.hetic;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.BinaryOperator;
+
 public class Calculateur {
-    public static void main(String[] args) {
-        if (!InputValidator.isValidInput(args)) {
-            System.exit(1);
+
+    public static double calculate(String num1, String num2, String operator) {
+        double a, b;
+        try {
+            a = Double.parseDouble(num1);
+            b = Double.parseDouble(num2);
+        } catch (NumberFormatException e) {
+            return Double.NaN; // Return NaN for invalid arguments
         }
 
-        double num1 = Double.parseDouble(args[0]);
-        double num2 = Double.parseDouble(args[1]);
-        String operator = args[2];
+        Map<String, BinaryOperator<Double>> operations = new HashMap<>();
+        operations.put("+", (x, y) -> x + y);
+        operations.put("-", (x, y) -> Math.abs(x - y));
 
-        Operation operation = OperationFactory.createOperation(operator);
-        double result = operation.calculate(num1, num2);
+        BinaryOperator<Double> operation = operations.get(operator);
+        if (operation == null) {
+            return Double.NaN; // Return NaN for invalid operator
+        }
 
-        System.out.println("Résultat de l'opération: " + result);
+        return operation.apply(a, b);
     }
 }
