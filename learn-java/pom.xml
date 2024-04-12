@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>4</groupId>
 	<artifactId>com.example</artifactId>
-	<version>14.</version>
+	<version>14</version>
 	<name>johannes</name>
 
 	<properties>
